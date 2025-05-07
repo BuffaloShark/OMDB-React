@@ -1,33 +1,27 @@
 import React from "react";
+import UndrawBooks from '../assets/Undraw_Books.svg';
+import { Link } from "react-router-dom";
+import Featured from "./Featured";
 
 const Landing = () => {
     return (
-    <section id="header" class="overlay">
-      <div class="container">
-        <div class="row__main--title">
-          <h2 class="section__title movies__header--title">
-            BROWSE MOVIES
-          </h2>
-        </div>
-            <div class="content__wrapper">
-                <div class="input__wrapper">
-                    <div class="search__bar">
-                    <input type="text" id="search-input" class="form-control" placeholder="Search title or keyword" />
-                        <div id="results-container">
-                        </div>
-                        <div class="search__wrapper">
-                            <div class="search__icon">
-                                <button class="submit btn" id="search-button">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                            </div>
-                        </div>
+        <section id="landing">
+            <header>
+                <div className="header__container">
+                    <div className="header__description">
+                        <h1>America's most awarded online library platform</h1>
+                        <h2>Find your dream book with <span className="purple">Library</span></h2>
+                        <a href="#features">
+                            <button className="btn">Browse Books</button>
+                        </a>
                     </div>
+                    <figure className="header__img--wrapper">
+                        <img src={UndrawBooks} alt="" />
+                    </figure>
                 </div>
-            </div>
-        </div>
-    </section>
-    );
-};
+            </header>
+        </section>
+    )
+}
 
-export default Landing;
+export default Landing
