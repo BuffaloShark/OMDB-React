@@ -1,63 +1,74 @@
-import Nav from "./components/Nav";
-import Footer from "./components/Footer";
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Home from "./pages/Home";
-import Books from "./pages/Books";
-import { books } from "./data"
-import BookInfo from "./pages/BookInfo";
-import Cart from "./pages/Cart";
-import { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
+import './App.css'
+import MovieList from "./components/MovieList";
+import MovieListHeading from "./components/MovieListHeading";
+import SearchBox from "./components/SearchBox";
+import AddFavorites from "./components/AddFavorites";
+import RemoveFavorites from "./components/RemoveFavorites";
 
-function App() {
-  const [cart, setCart] = useState ([]);
+const App = () => {
+  const [movies, setMovies] = useState([]);
+  // const [favorites, setFavorites] = useState([]);
+  const [searchValue, setSearchValue] = useState('')
 
-  function addToCart(book) {
-    setCart([...cart, {...book, quantity: 1 }])
-  } 
+  const getMovieRequest = async (searchValue) => {
+    const url = `https://www.omdbapi.com/?s=${searchValue}&apikey=4c143b18`;
+    const response = await fetch(url);
+    const responseJson = await response.json();
 
-  function changeQuantity(book, quantity) {
-    setCart(
-      cart.map((item) => item.id === book.id
-      ? {
-          ...item,
-          quantity: +quantity,
-        }
-        : item
-          )
-        );
-      }
- 
-      function removeItem(item) {
-        setCart(cart.filter(book => book.id !== item.id))
-      }
+    if (responseJson.Search) {
+      setMovies(responseJson.Search);
+    }
+  };
 
-      function numberOfItems() {
-        let counter = 0;
-        cart.forEach(item => {
-          counter += item.quantity
-        })
-        return counter;
-      }
+  useEffect(() => {
+    getMovieRequest(searchValue);
+  }, [searchValue]);
 
-      useEffect(() => {
-    console.log(cart)
-  }, [cart])
+  // useEffect(() => {
+  //   const movieFavorites = JSON.parse(localStorage.getItem('react-movie-app-favorites'));
+  //   setFavorites(movieFavorites);
+  // }, [])
 
+  // const saveToLocalStorage = (items) => {
+  //   localStorage.setItem('react-movie-app-favorites', JSON.stringify(items))
+  // }
+
+  // const addFavoriteMovie = (movie) => {
+  //   const newFavoriteList = [...favorites, movie]
+  //   setFavorites(newFavoriteList);
+  //   saveToLocalStorage(newFavoriteList);
+  // }
+
+  // const removeFavoriteMovie = (movie) => {
+  //   const newFavoriteList = favorites.filter((favorite) => favorite.imdbID !== movie.imdbID);
+
+  //   setFavorites(newFavoriteList);
+  //   saveToLocalStorage(newFavoriteList);
+  // }
 
   return (
-    <Router>
-    <div className="App">
-      <Route />
-      <Nav numberOfItems={numberOfItems()} />
-      <Route path="/" exact component={Home} />
-      <Route path="/books" exact render={() => <Books books={books} />} />
-      <Route path="/books/:id" render={() => <BookInfo books={books} addToCart={addToCart} cart={cart} />} />
-      <Route path="/cart" render={() => <Cart books={books} cart={cart} changeQuantity={changeQuantity} removeItem={removeItem} />} />
-      <Footer />
-    </div>
-    </Router>
+      <div className="container">
+        <MovieListHeading heading='Movies' />
+        <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
+        <div className="row" id="{movie.imdbID}">          
+          <div className="card-body">
+            <MovieList 
+            movies={movies} 
+            // handleFavoritesClick={addFavoriteMovie} 
+            // favoriteComponent={AddFavorites} />
+            />
+          </div>
+        </div>
+        {/* <div className="row">
+          <div className="card-body">
+          <MovieList movies={favorites}
+          handleFavoritesClick={removeFavoriteMovie}
+          favoriteComponent={RemoveFavorites} /> 
+          </div>
+        </div> */}
+      </div>
   );
 }
 
 export default App;
- 
