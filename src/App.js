@@ -8,7 +8,7 @@ import RemoveFavorites from "./components/RemoveFavorites";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
-  // const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [searchValue, setSearchValue] = useState('')
 
   const getMovieRequest = async (searchValue) => {
@@ -35,8 +35,8 @@ const App = () => {
   // }
 
   // const addFavoriteMovie = (movie) => {
-  //   const newFavoriteList = [...favorites, movie]
-  //   setFavorites(newFavoriteList);
+    // const newFavoritesList = [...favorites, movie]
+    // setFavorites(newFavoritesList);
   //   saveToLocalStorage(newFavoriteList);
   // }
 
@@ -49,24 +49,30 @@ const App = () => {
 
   return (
       <div className="container">
+        <div className="row">
         <MovieListHeading heading='Movies' />
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
+        </div>
+
         <div className="row" id="{movie.imdbID}">          
           <div className="card-body">
             <MovieList 
             movies={movies} 
             // handleFavoritesClick={addFavoriteMovie} 
-            // favoriteComponent={AddFavorites} />
+            // favoritesComponent={AddFavorites} 
             />
           </div>
         </div>
         {/* <div className="row">
-          <div className="card-body">
-          <MovieList movies={favorites}
-          handleFavoritesClick={removeFavoriteMovie}
-          favoriteComponent={RemoveFavorites} /> 
-          </div>
+          <MovieListHeading heading='Favorites'          
         </div> */}
+        <div className="card-body">
+            <MovieList 
+            movies={favorites} 
+            // handleFavoritesClick={removeFavoriteMovie} 
+            // favoritesComponent={RemoveFavorites} 
+            />
+          </div>
       </div>
   );
 }
