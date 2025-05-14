@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { faBars, faShoppingCart, faTimes, faBolt, faBookOpen, faTags, faStar, faStarHalfAlt, faArrowLeft, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faBars, faShoppingCart, faTimes, faBolt, faBookOpen, faTags, faStar, faStarHalfAlt, faArrowLeft, faHeart, faRemove, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import FavoritesProvider from './context/FavoritesContext';
 
-// library.add(faBars, faShoppingCart, faTimes, faBolt, faBookOpen, faTags, faStar, faStarHalfAlt, faArrowLeft, faHeart)
+library.add(faBars, faShoppingCart, faTimes, faBolt, faBookOpen, faTags, faStar, faStarHalfAlt, faArrowLeft, faHeart, faRemove, faMagnifyingGlass, faSpinner)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <BrowserRouter>
+  <FavoritesProvider>
     <App />
-  </React.StrictMode>
+  </FavoritesProvider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,15 +1,22 @@
 import React, { use, useEffect, useState } from "react";
+import { Routes, Route, Link, useNavigate, Router } from 'react-router-dom'
+import './index.css'
 import './App.css'
 import MovieList from "./components/MovieList";
 import MovieListHeading from "./components/MovieListHeading";
 import SearchBox from "./components/SearchBox";
 import AddFavorites from "./components/AddFavorites";
 import RemoveFavorites from "./components/RemoveFavorites";
+import MovieDetails from "./pages/MovieDetails";
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
+import Results from "./pages/Results";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState('');
+  const navigate = useNavigate();
 
   const getMovieRequest = async (searchValue) => {
     const url = `https://www.omdbapi.com/?s=${searchValue}&apikey=4c143b18`;
@@ -18,63 +25,59 @@ const App = () => {
 
     if (responseJson.Search) {
       setMovies(responseJson.Search);
+    } else {
+      setMovies([]);
     }
   };
 
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem('react-movie-app-favorites', JSON.stringify(items));
+  };
+
   useEffect(() => {
-    getMovieRequest(searchValue);
-  }, [searchValue]);
+    const movieFavorites = JSON.parse(localStorage.getItem('react-movie-app-favorites')) || [];
+    setFavorites(movieFavorites);
+  }, []);
 
-  // useEffect(() => {
-  //   const movieFavorites = JSON.parse(localStorage.getItem('react-movie-app-favorites'));
-  //   setFavorites(movieFavorites);
-  // }, [])
+  const handleFavoritesClick = (movie) => {
+    const isFavorite = favorites.some((fav) => fav.imdbID === movie.imdbID);
 
-  // const saveToLocalStorage = (items) => {
-  //   localStorage.setItem('react-movie-app-favorites', JSON.stringify(items))
-  // }
+    if (isFavorite) {
+      const updatedFavorites = favorites.filter((fav) => fav.imdbID !== movie.imdbID);
+      setFavorites(updatedFavorites);
+      saveToLocalStorage(updatedFavorites);
+    } else {
+      const updatedFavorites = [...favorites, movie];
+      setFavorites(updatedFavorites);
+      saveToLocalStorage(updatedFavorites);
+    }
+  };
 
-  // const addFavoriteMovie = (movie) => {
-    // const newFavoritesList = [...favorites, movie]
-    // setFavorites(newFavoritesList);
-  //   saveToLocalStorage(newFavoriteList);
-  // }
-
-  // const removeFavoriteMovie = (movie) => {
-  //   const newFavoriteList = favorites.filter((favorite) => favorite.imdbID !== movie.imdbID);
-
-  //   setFavorites(newFavoriteList);
-  //   saveToLocalStorage(newFavoriteList);
-  // }
+  const handleSearch = () => {
+    if (searchValue.trim()) {
+      getMovieRequest(searchValue);
+      navigate('/search');
+    }
+  };
 
   return (
+    <>
       <div className="container">
-        <div className="row">
-        <MovieListHeading heading='Movies' />
-        <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
-        </div>
+        
+        <nav className="navbar">
+          <Link to="/">Home</Link>
+          <Link to="/favorites">Favorites</Link>
+        </nav>
 
-        <div className="row" id="{movie.imdbID}">          
-          <div className="card-body">
-            <MovieList 
-            movies={movies} 
-            // handleFavoritesClick={addFavoriteMovie} 
-            // favoritesComponent={AddFavorites} 
-            />
-          </div>
-        </div>
-        {/* <div className="row">
-          <MovieListHeading heading='Favorites'          
-        </div> */}
-        <div className="card-body">
-            <MovieList 
-            movies={favorites} 
-            // handleFavoritesClick={removeFavoriteMovie} 
-            // favoritesComponent={RemoveFavorites} 
-            />
-          </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/results" element={<Results />} />
+          <Route path="/movie-details/:imdbID" element={<MovieDetails />} />
+          <Route path="/favorites" element={<Favorites />} />
+        </Routes>
       </div>
+    </>
   );
-}
+};
 
 export default App;

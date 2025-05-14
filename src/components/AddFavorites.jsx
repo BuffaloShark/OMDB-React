@@ -1,11 +1,11 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const AddFavorites = () => {
     return (
         <>
-        <div className="favorite__icon">
-            {/* <FontAwesomeIcon icon="faHeart" /> */}
-        </div>
+        <FontAwesomeIcon icon={faHeart} color="red" size={20} />
         </>
     )
 };
