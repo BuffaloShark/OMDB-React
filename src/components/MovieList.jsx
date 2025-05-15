@@ -15,8 +15,8 @@ const MovieList = ({ movies }) => {
 
   if (!movies || movies.length === 0) return <div className='void'>
     <img className='void' src={UndrawVoid} alt="" />
-    <h2>Could not find any matches related to your search.</h2>
-    <h3>Please try again.</h3>
+    <h2>I couldn't find it. I ran through the mist and I couldn't find it.</h2>
+    <h3>&ndash; <em>Gone With the Wind.</em><br/>Please try again.</h3>
     </div>;
 
   return (
@@ -45,7 +45,7 @@ const MovieList = ({ movies }) => {
             <h3 className="movie__title">{movie.Title}</h3>
             <p className="movie__year">{movie.Year}</p>
             <p className="movie__genre">{movie.Genre}</p>
-            <p className="movie__rating">IMDB Rating: {movie.imdbRating}</p>
+            <p className="movie__rating">IMDB Rating: {movie.imdbRating}/10</p>
           </div>
         </Link>
       </div>
