@@ -70,7 +70,7 @@ const MovieDetails = () => {
                   <strong>Runtime:</strong> {movie.Runtime}
                 </div>
                 <div className="movie__selected--rating">
-                  <strong>IMDb Rating:</strong> {movie.imdbRating}
+                  <strong>IMDb Rating:</strong> {movie.imdbRating}/10
                 </div>
                 <div className="movie__summary">
                   <h3 className="movie__summary--title">Plot:</h3>

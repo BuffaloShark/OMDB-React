@@ -90,8 +90,8 @@ const Favorites = () => {
                 ) : (
                     <div className='void'>
                     <img className='void' src={UndrawEmpty} alt="" />
-                    <h2>You do not have any saved favorites.</h2>
-                    <h3>Go find some!</h3>
+                    <h2>You are marching into the unknown, armed with... nothing. Have a sandwich.</h2>
+                    <h3>&ndash; <em>You've Got Mail.</em> <br/>Now go add some favorites.</h3>
                     </div>
                 )}
               </div>
