@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-const SearchBox = ({ searchValue, setSearchValue, loading }) => {
+const SearchBox = ({ searchValue, setSearchValue }) => {
   return (
     <>
     <div className="content__wrapper">
@@ -11,17 +11,9 @@ const SearchBox = ({ searchValue, setSearchValue, loading }) => {
             <input
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                placeholder="Do you feel lucky, punk?"
+                placeholder="Type to search..."
             />
                 <div className="search__wrapper">
-                    <div className="search__icon">    
-                        <button className="btn" type="submit" disabled={loading}>
-                            <FontAwesomeIcon
-                            icon={loading ? faSpinner : faMagnifyingGlass}
-                            spin={loading}
-                            />
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>

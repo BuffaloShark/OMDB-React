@@ -1,11 +1,12 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import LibraryLogo from '../assets/Library.svg'
+import CinemaLogo from '../assets/CinemaLogo.svg'
 import { Link } from "react-router-dom";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const Nav = ({ numberOfItems }) => {
+const Nav = () => {
     function openMenu() {
-        document.body.classList += " menu--open";
+        document.body.classList.add("menu--open");
     }
 
     function closeMenu() {
@@ -16,7 +17,7 @@ const Nav = ({ numberOfItems }) => {
     <nav>
         <div className="nav__container">
             <Link to="/">
-            <img src={LibraryLogo} alt="" className="logo" />
+            <img src={CinemaLogo} alt="" className="logo" />
             </Link>
             <ul className="nav__links">
                 <li className="nav__list">
@@ -25,40 +26,33 @@ const Nav = ({ numberOfItems }) => {
                     </Link>
                 </li>
                 <li className="nav__list">
-                    <Link to="/books" className="nav__link nav__link--primary">
-                    Books
+                    <Link to="/results" className="nav__link">
+                    Find Movies
                     </Link>
                 </li>
-                <button className="btn__menu" onClick={openMenu}>
-                    <FontAwesomeIcon icon="bars" />
-                </button>
-                <li className="nav__icon">
-                    <Link to="/cart" className="nav__link">
-                    <FontAwesomeIcon icon="shopping-cart" />
+                <li className="nav__list">
+                    <Link to="/favorites" className="nav__link nav__link--primary">
+                    My Favorites
                     </Link>
-                    {
-                    numberOfItems > 0 && <span className="cart__length">{numberOfItems}</span>
-                    }
                 </li>
             </ul>
+                <button className="btn__menu" onClick={openMenu}>
+                    <FontAwesomeIcon icon={faBars} />
+                </button>
+                
             <div className="menu__backdrop">
                 <button className="btn__menu btn__menu--close" onClick={closeMenu}>
-                    <FontAwesomeIcon icon="times" />
+                    <FontAwesomeIcon icon={faTimes} />
                 </button>
                 <ul className="menu__links">
                     <li className="menu__list">
-                        <Link to="/" className="menu__link">
+                        <Link to="/" className="menu__link" onClick={closeMenu}>
                         Home
                         </Link>
                     </li>
                     <li className="menu__list">
-                        <Link to="/books" className="menu__link">
-                        Books
-                        </Link>
-                    </li>
-                    <li className="menu__list">
-                        <Link to="/cart" className="menu__link">
-                        Cart
+                        <Link to="/favorites" className="menu__link" onClick={closeMenu}>
+                        My Favorites
                         </Link>
                     </li>
                 </ul>

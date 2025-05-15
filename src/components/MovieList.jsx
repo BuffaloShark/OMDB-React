@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { Link } from 'react-router-dom';  
+import UndrawVoid from '../assets/undraw_void_wez2.svg';
+
 
 const MovieList = ({ movies }) => {
   const { favorites, toggleFavorite } = useContext(FavoritesContext);
@@ -11,26 +13,43 @@ const MovieList = ({ movies }) => {
   const isFavorite = (movie) =>
     favorites.some((fav) => fav.imdbID === movie.imdbID);
 
-  if (!movies || movies.length === 0) return <div>No movies found.</div>;
+  if (!movies || movies.length === 0) return <div className='void'>
+    <img className='void' src={UndrawVoid} alt="" />
+    <h2>Could not find any matches related to your search.</h2>
+    <h3>Please try again.</h3>
+    </div>;
 
   return (
     <>
       {movies.map((movie) => (
-        <div className="image-container" key={movie.imdbID}>
-          <Link to={`/movie-details/${movie.imdbID}`}>
-            <img src={movie.Poster} alt={movie.Title} />
-            <h5 className="movie__title">{movie.Title}</h5>
-            <h5 className="movie__year">{movie.Year}</h5>
-            <h5 className="movie__year">{movie.imdbRating}</h5>
-          </Link>
-         
-          <div className="overlay" onClick={() => toggleFavorite(movie)}>
-            <FontAwesomeIcon
-              icon={isFavorite(movie) ? solidHeart : regularHeart}
-              className="favorite-icon"
-            />
+        <div className="movie" key={movie.imdbID}>
+        <Link to={`/movie-details/${movie.imdbID}`} className="movie__card">
+          <figure className="movie__img--wrapper">
+            <img className="movie__img" src={movie.Poster} alt={movie.Title} />
+            <div
+              className="overlay"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                toggleFavorite(movie);
+              }}
+            >
+              <FontAwesomeIcon
+                icon={isFavorite(movie) ? solidHeart : regularHeart}
+                className="favorite-icon"
+              />
+            </div>
+          </figure>
+      
+          <div className="movie__details">
+            <h3 className="movie__title">{movie.Title}</h3>
+            <p className="movie__year">{movie.Year}</p>
+            <p className="movie__genre">{movie.Genre}</p>
+            <p className="movie__rating">IMDB Rating: {movie.imdbRating}</p>
           </div>
-        </div>
+        </Link>
+      </div>
+      
       ))}
     </>
   );

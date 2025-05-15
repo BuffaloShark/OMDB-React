@@ -1,16 +1,12 @@
 import React, { use, useEffect, useState } from "react";
 import { Routes, Route, Link, useNavigate, Router } from 'react-router-dom'
 import './index.css'
-import './App.css'
-import MovieList from "./components/MovieList";
-import MovieListHeading from "./components/MovieListHeading";
-import SearchBox from "./components/SearchBox";
-import AddFavorites from "./components/AddFavorites";
-import RemoveFavorites from "./components/RemoveFavorites";
+import Nav from "./components/Nav";
 import MovieDetails from "./pages/MovieDetails";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import Results from "./pages/Results";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -62,19 +58,15 @@ const App = () => {
 
   return (
     <>
-      <div className="container">
-        
-        <nav className="navbar">
-          <Link to="/">Home</Link>
-          <Link to="/favorites">Favorites</Link>
-        </nav>
-
+      <div className="App">
+          <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/results" element={<Results />} />
           <Route path="/movie-details/:imdbID" element={<MovieDetails />} />
           <Route path="/favorites" element={<Favorites />} />
         </Routes>
+        <Footer />
       </div>
     </>
   );
